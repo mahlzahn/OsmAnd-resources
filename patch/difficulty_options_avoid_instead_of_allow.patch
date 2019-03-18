@@ -1,0 +1,48 @@
+diff --git a/routing/routing.xml b/routing/routing.xml
+index 4a0624d0e..f7057f3a8 100644
+--- a/routing/routing.xml
++++ b/routing/routing.xml
+@@ -1700,9 +1700,12 @@
+ 		<parameter id="piste_type_skating" group="Piste type" name="Nordic (skating or free style)" type="boolean" default="true"/>
+ 		<parameter id="piste_type_skitour" group="Piste type" name="Skitour" type="boolean" default="true"/>
+ 	
+-		<parameter id="allow_intermediate" name="Allow intermediate routes" description="More difficult routes with steeper sections. Generally some obstacles that should be avoided." type="boolean" default="true"/>
++		<!-- <parameter id="allow_intermediate" name="Allow intermediate routes" description="More difficult routes with steeper sections. Generally some obstacles that should be avoided." type="boolean" default="true"/>
+ 		<parameter id="allow_advanced" name="Allow advanced routes" description="Difficult routes, with dangerous obstacles and steep sections." type="boolean" default="false"/>
+-		<parameter id="allow_expert" name="Allow expert routes" description="Extremely difficult routes, with dangerous obstacles and surroundings." type="boolean" default="false"/>
++		<parameter id="allow_expert" name="Allow expert routes" description="Extremely difficult routes, with dangerous obstacles and surroundings." type="boolean" default="false"/> -->
++		<parameter id="avoid_intermediate" name="Avoid intermediate routes" description="More difficult routes with steeper sections. Generally some obstacles that should be avoided." type="boolean" default="false"/>
++		<parameter id="avoid_advanced" name="Avoid advanced routes" description="Difficult routes, with dangerous obstacles and steep sections." type="boolean" default="true"/>
++		<parameter id="avoid_expert" name="Avoid expert routes" description="Extremely difficult routes, with dangerous obstacles and surroundings." type="boolean" default="true"/>
+ 
+ 		<!-- <parameter id="allow_skating_only" name="Allow skating only routes" description="Routes groomed for free style or skating only" type="boolean" default="true"/>
+ 		<parameter id="allow_classic_only" name="Allow classic only routes" description="Routes groomed for classic style only" type="boolean" default="true"/> -->
+@@ -1721,15 +1724,24 @@
+             <select value="1" t="piste:type" v="hike"/>
+ 
+             <!-- Beginner and novice routes are always allowed, the others have a settings param: -->
+-            <ifnot param="allow_intermediate">	
++			<!-- <ifnot param="allow_intermediate">
+ 				<select value="-1" t="piste:difficulty" v="intermediate"/>
+             </ifnot>
+-            <ifnot param="allow_advanced">	
++	    <ifnot param="allow_advanced">
+     			<select value="-1" t="piste:difficulty" v="advanced"/>
+             </ifnot>
+-            <ifnot param="allow_expert">	
++	    <ifnot param="allow_expert">
+     			<select value="-1" t="piste:difficulty" v="expert"/>
+-            </ifnot>
++			</ifnot> -->
++			<if param="avoid_intermediate">
++				<select value="-1" t="piste:difficulty" v="intermediate"/>
++			</if>
++			<if param="avoid_advanced">
++				<select value="-1" t="piste:difficulty" v="advanced"/>
++			</if>
++			<if param="avoid_expert">
++				<select value="-1" t="piste:difficulty" v="expert"/>
++			</if>
+             
+             <gt value1="0" value2=":freeride_policy">
+                 <select value="-1" t="piste:difficulty" v="freeride"/>
